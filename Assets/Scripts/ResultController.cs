@@ -1,35 +1,51 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 
 public class ResultController : MonoBehaviour
 {
-    public List<float> delay = new() { 1, 2, 0 };
-    [TextArea]
-    public List<string> content = new() {"제목", "내용1\n내용2"};
-    public List<GameObject> textObject = new();
+    public GameObject titleBackground;
+    public GameObject title;
+    public GameObject description;
+    public GameObject continueObject;
+    private bool _spaceClicked = false;
 
-    IEnumerator DelayedAction(float second) {
-        yield return new WaitForSeconds(second);
-    }
-    
-    IEnumerator Start()
+    private static IEnumerator DelayedAction(float delay)
     {
-        foreach (var o in textObject)
+        yield return new WaitForSeconds(delay);
+    }
+
+    private IEnumerator Start()
+    {
+        titleBackground.SetActive(false);
+        title.SetActive(false);
+        description.SetActive(false);
+        continueObject.SetActive(false);
+
+        yield return StartCoroutine(DelayedAction(1f));
+        titleBackground.SetActive(true);
+        title.SetActive(true);
+
+        yield return StartCoroutine(DelayedAction(1f));
+        description.SetActive(true);
+
+        yield return StartCoroutine(DelayedAction(1f));
+        while (!_spaceClicked)
         {
-            o.SetActive(false);
+            continueObject.SetActive(true);
+            yield return StartCoroutine(DelayedAction(0.5f));
+            continueObject.SetActive(false);
+            yield return StartCoroutine(DelayedAction(0.5f));
         }
-        for (var i=0; i<textObject.Count; i++)
+    }
+
+    private void Update()
+    {
+        if (Input.GetKey(KeyCode.Space) && !_spaceClicked)
         {
-            yield return DelayedAction(delay[i]);
-            textObject[i].SetActive(true);
-            Debug.Log(i);
-            Debug.Log(content.Count-1);
-            if (i < content.Count-1)
-            {
-                textObject[i].GetComponent<TextMeshProUGUI>().text = content[i];
-            }
+            _spaceClicked = true;
+            // Change Scene
         }
     }
 }
