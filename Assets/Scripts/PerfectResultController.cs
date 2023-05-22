@@ -4,15 +4,19 @@ using UnityEngine;
 
 public class PerfectResultController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public GameObject background;
+    
+    private static IEnumerator DelayedAction(float delay)
     {
-        
+        yield return new WaitForSeconds(delay);
     }
-
-    // Update is called once per frame
-    void Update()
+    
+    private IEnumerator Start()
     {
-        
+        background.SetActive(false);
+        yield return StartCoroutine(DelayedAction(2f));
+        background.SetActive(true);
+        yield return StartCoroutine(DelayedAction(5f));
+        // Change Scene
     }
 }
