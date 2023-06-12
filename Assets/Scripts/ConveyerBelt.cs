@@ -20,7 +20,6 @@ public class ConveyerBelt : MonoBehaviour
             Rigidbody rb = collision.gameObject.GetComponent<Rigidbody>();
             if (rb != null)
             {
-                Debug.Log("HELLO");
                 // 컨베이어 벨트의 전진 방향으로 힘을 가합니다.
                 rb.velocity = transform.forward * speed;
             }
