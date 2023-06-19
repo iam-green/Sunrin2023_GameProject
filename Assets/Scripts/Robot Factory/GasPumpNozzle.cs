@@ -21,11 +21,9 @@ public class GasPumpNozzle : MonoBehaviour
     private Transform connectionTransform; // Connection 오브젝트의 Transform
     private List<GameObject> spawnedPrefabs = new List<GameObject>(); // 생성된 프리팹들을 저장하는 리스트
 
-    private bool isColliding = false; // 충돌 감지 여부
-
     private void Start()
     {
-        moveSpeed = 10.0f;
+        moveSpeed = 35.0f;
         distanceThreshold = 2.5f;
         spawnDistance = 0.07f;
         initialPosition = transform.position;
@@ -91,19 +89,10 @@ public class GasPumpNozzle : MonoBehaviour
                     isMousePressed = false;
                 }
             }
-
-            
-            // 충돌 감지
-            /*
-            if (isColliding)
-            {
-                // Robot 오브젝트와 Main 오브젝트의 움직임을 멈춤
-                robot.GetComponent<Robot>().StopMovement();
-                StopMovement();
-            }
-             */
         }
     }
+
+    
 
     private void SpawnConnectPrefab(float yPosition)
     {
@@ -114,19 +103,4 @@ public class GasPumpNozzle : MonoBehaviour
         spawnedPrefabs.Add(spawnedPrefab);
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject == fuelCap || other.gameObject == mainObject)
-        {
-            isColliding = true;
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject == fuelCap || other.gameObject == mainObject)
-        {
-            isColliding = false;
-        }
-    }
 }

@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - GasTank
+  - Robot
   layers:
   - Default
   - TransparentFX
